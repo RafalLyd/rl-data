@@ -1,0 +1,1473 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RL-Data — Automatyzacja z AI dla Twojej Firmy</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fafbfc;
+      --surface: #ffffff;
+      --surface-2: #f5f7fa;
+      --accent: #1e40af;
+      --accent-purple: #6d28d9;
+      --accent-dim: #1e40af15;
+      --accent-purple-dim: #6d28d915;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --border: #e2e8f0;
+      --radius: 16px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Grain overlay */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.02'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 100;
+      padding: 20px 0;
+      backdrop-filter: blur(20px);
+      background: rgba(250, 251, 252, 0.85);
+      border-bottom: 1px solid var(--border);
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      letter-spacing: -0.5px;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    nav ul {
+      display: flex;
+      gap: 36px;
+      list-style: none;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color .3s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .nav-cta {
+      background: var(--accent);
+      color: #ffffff;
+      padding: 10px 24px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .3s;
+    }
+
+    .nav-cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(30, 64, 175, 0.25);
+      color: #ffffff;
+    }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 100px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(30, 64, 175, 0.2);
+      border-radius: 100px;
+      padding: 6px 16px;
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 28px;
+      animation: fadeUp .8s ease both;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: .4;
+      }
+    }
+
+    .hero h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(48px, 6vw, 80px);
+      line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      animation: fadeUp .8s .1s ease both;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .purple-accent {
+      color: var(--accent-purple);
+      font-weight: 600;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: var(--text-muted);
+      max-width: 480px;
+      margin-bottom: 40px;
+      animation: fadeUp .8s .2s ease both;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      animation: fadeUp .8s .3s ease both;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #ffffff;
+      padding: 14px 32px;
+      border-radius: 100px;
+      font-weight: 600;
+      font-size: 15px;
+      text-decoration: none;
+      transition: transform .2s, box-shadow .3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(30, 64, 175, 0.3);
+    }
+
+    .btn-secondary {
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 14px 32px;
+      border-radius: 100px;
+      font-weight: 500;
+      font-size: 15px;
+      text-decoration: none;
+      transition: border-color .3s, background .3s;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+    }
+
+    /* Hero visual */
+    .hero-visual {
+      position: relative;
+      animation: fadeUp 1s .4s ease both;
+    }
+
+    .hero-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 180deg, transparent, var(--accent-dim), transparent 30%);
+      animation: rotate 8s linear infinite;
+    }
+
+    @keyframes rotate {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .hero-card-inner {
+      position: relative;
+      background: var(--surface);
+      border-radius: 12px;
+      padding: 28px;
+      z-index: 1;
+    }
+
+    .flow-line {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+      opacity: 0;
+      animation: slideIn .5s ease forwards;
+    }
+
+    .flow-line:nth-child(1) {
+      animation-delay: .6s;
+    }
+
+    .flow-line:nth-child(2) {
+      animation-delay: .8s;
+    }
+
+    .flow-line:nth-child(3) {
+      animation-delay: 1s;
+    }
+
+    .flow-line:nth-child(4) {
+      animation-delay: 1.2s;
+    }
+
+    .flow-line:last-child {
+      margin-bottom: 0;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    .flow-node {
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 12px 18px;
+      font-size: 13px;
+      font-weight: 500;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .flow-node.active {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+      color: var(--accent);
+    }
+
+    .flow-arrow {
+      color: var(--accent);
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+
+    .flow-status {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-left: auto;
+      flex-shrink: 0;
+    }
+
+    .flow-status.done {
+      color: #10b981;
+    }
+
+    .flow-status.running {
+      color: var(--accent);
+    }
+
+    /* STATS */
+    .stats-bar {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 60px 0;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 32px;
+      text-align: center;
+    }
+
+    .stat-num {
+      font-family: 'Instrument Serif', serif;
+      font-size: 52px;
+      color: var(--accent);
+      letter-spacing: -2px;
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 8px;
+    }
+
+    /* SERVICES */
+    .section {
+      padding: 120px 0;
+    }
+
+    .section-label {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(36px, 4vw, 56px);
+      letter-spacing: -1.5px;
+      line-height: 1.1;
+      margin-bottom: 20px;
+    }
+
+    .section-desc {
+      font-size: 17px;
+      color: var(--text-muted);
+      max-width: 560px;
+      margin-bottom: 64px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .service-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 36px;
+      transition: border-color .3s, transform .3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform .4s;
+    }
+
+    .service-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(30, 64, 175, 0.15);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 24px;
+    }
+
+    .service-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .service-card p {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+
+    /* CASE STUDIES */
+    .cases-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .case-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: border-color .3s;
+    }
+
+    .case-card:hover {
+      border-color: var(--accent);
+    }
+
+    .case-visual {
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .case-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: .08;
+    }
+
+    .case-card:nth-child(1) .case-visual {
+      background: linear-gradient(135deg, #dbeafe, #eff6ff);
+    }
+
+    .case-card:nth-child(1) .case-visual::before {
+      background: radial-gradient(circle at 30% 50%, rgba(30, 64, 175, 0.15), transparent 70%);
+    }
+
+    .case-card:nth-child(2) .case-visual {
+      background: linear-gradient(135deg, #e0e7ff, #eef2ff);
+    }
+
+    .case-card:nth-child(2) .case-visual::before {
+      background: radial-gradient(circle at 70% 30%, rgba(99, 102, 241, 0.15), transparent 70%);
+    }
+
+    .case-card:nth-child(3) .case-visual {
+      background: linear-gradient(135deg, #dbeafe, #f0f9ff);
+    }
+
+    .case-card:nth-child(3) .case-visual::before {
+      background: radial-gradient(circle at 50% 70%, rgba(14, 165, 233, 0.15), transparent 70%);
+    }
+
+    .case-metric-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .case-metric {
+      background: rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(30, 64, 175, 0.1);
+      border-radius: 12px;
+      padding: 20px;
+      backdrop-filter: blur(10px);
+    }
+
+    .case-metric-val {
+      font-family: 'Instrument Serif', serif;
+      font-size: 36px;
+      color: var(--accent);
+      letter-spacing: -1px;
+      line-height: 1;
+    }
+
+    .case-metric-label {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    .case-content {
+      padding: 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .case-tag {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    .case-content h3 {
+      font-family: 'Instrument Serif', serif;
+      font-size: 32px;
+      letter-spacing: -0.5px;
+      margin-bottom: 16px;
+      line-height: 1.2;
+    }
+
+    .case-content p {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.7;
+      margin-bottom: 24px;
+    }
+
+    .case-results {
+      display: flex;
+      gap: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+    }
+
+    .case-result-item span {
+      display: block;
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      color: var(--text);
+      letter-spacing: -1px;
+    }
+
+    .case-result-item small {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    /* PROCESS */
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+      position: relative;
+    }
+
+    .process-steps::before {
+      content: '';
+      position: absolute;
+      top: 40px;
+      left: 12.5%;
+      right: 12.5%;
+      height: 1px;
+      background: linear-gradient(90deg, var(--border), var(--accent), var(--border));
+    }
+
+    .step {
+      text-align: center;
+      position: relative;
+    }
+
+    .step-num {
+      width: 80px;
+      height: 80px;
+      background: var(--surface);
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Instrument Serif', serif;
+      font-size: 32px;
+      color: var(--accent);
+      margin: 0 auto 24px;
+      position: relative;
+      z-index: 1;
+      transition: border-color .3s, box-shadow .3s;
+    }
+
+    .step:hover .step-num {
+      border-color: var(--accent);
+      box-shadow: 0 0 30px rgba(30, 64, 175, 0.2);
+    }
+
+    .step h4 {
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .step p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+
+    /* TESTIMONIAL */
+    .testimonial-section {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .testimonial-card {
+      max-width: 700px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .testimonial-card blockquote {
+      font-family: 'Instrument Serif', serif;
+      font-size: 28px;
+      font-style: italic;
+      line-height: 1.5;
+      letter-spacing: -0.5px;
+      margin-bottom: 32px;
+      position: relative;
+    }
+
+    .testimonial-card blockquote::before {
+      content: '"';
+      font-size: 120px;
+      color: var(--accent);
+      position: absolute;
+      top: -40px;
+      left: -30px;
+      opacity: .2;
+      font-family: 'Instrument Serif', serif;
+    }
+
+    .testimonial-author {
+      font-weight: 600;
+    }
+
+    .testimonial-role {
+      color: var(--text-muted);
+      font-size: 14px;
+      margin-top: 4px;
+    }
+
+    /* CTA */
+    .cta-section {
+      text-align: center;
+      position: relative;
+    }
+
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 600px;
+      height: 600px;
+      transform: translate(-50%, -50%);
+      background: radial-gradient(circle, var(--accent-dim), transparent 70%);
+      pointer-events: none;
+    }
+
+    .cta-section .section-title {
+      margin-bottom: 16px;
+    }
+
+    .cta-section .section-desc {
+      margin: 0 auto 48px;
+      text-align: center;
+    }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 60px 0 40px;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 48px;
+      margin-bottom: 48px;
+    }
+
+    .footer-brand .logo {
+      margin-bottom: 16px;
+    }
+
+    .footer-brand p {
+      font-size: 14px;
+      color: var(--text-muted);
+      max-width: 280px;
+      line-height: 1.7;
+    }
+
+    .footer-col h4 {
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      color: var(--text);
+    }
+
+    .footer-col a {
+      display: block;
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      margin-bottom: 12px;
+      transition: color .3s;
+    }
+
+    .footer-col a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* HAMBURGER MENU */
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: all .3s;
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 69px;
+      left: 0;
+      right: 0;
+      background: rgba(250, 251, 252, 0.98);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      z-index: 99;
+      padding: 16px 0 24px;
+    }
+
+    .mobile-menu.open {
+      display: block;
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .mobile-menu a {
+      display: block;
+      padding: 14px 24px;
+      color: var(--text);
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mobile-menu a:last-child {
+      border-bottom: none;
+    }
+
+    .mobile-menu .mobile-cta {
+      margin: 16px 24px 0;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 100px;
+      text-align: center;
+      font-weight: 600;
+      border-bottom: none !important;
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .container {
+        padding: 0 20px;
+      }
+
+      nav ul,
+      .nav-cta {
+        display: none;
+      }
+
+      .nav-hamburger {
+        display: flex;
+      }
+
+      .hero-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .hero {
+        padding-top: 90px;
+        min-height: auto;
+        padding-bottom: 60px;
+      }
+
+      .hero-visual {
+        order: -1;
+      }
+
+      .hero-card {
+        padding: 20px;
+      }
+
+      .hero-card-inner {
+        padding: 18px;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .process-steps {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .process-steps::before {
+        display: none;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .case-card {
+        grid-template-columns: 1fr;
+      }
+
+      .case-visual {
+        min-height: 220px;
+        padding: 28px;
+      }
+
+      .case-content {
+        padding: 28px;
+      }
+
+      .section {
+        padding: 80px 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 0 16px;
+      }
+
+      .hero h1 {
+        font-size: clamp(36px, 10vw, 52px);
+        letter-spacing: -1px;
+      }
+
+      .hero p {
+        font-size: 16px;
+      }
+
+      .hero-actions {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .hero-actions a {
+        text-align: center;
+        justify-content: center;
+      }
+
+      .stats-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+      }
+
+      .stat-num {
+        font-size: 40px;
+      }
+
+      .process-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 12px;
+        text-align: center;
+      }
+
+      .case-metric-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+
+      .case-metric {
+        padding: 14px;
+      }
+
+      .case-metric-val {
+        font-size: 22px;
+      }
+
+      .case-content h3 {
+        font-size: 24px;
+      }
+
+      .case-results {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .section {
+        padding: 60px 0;
+      }
+
+      .section-title {
+        font-size: clamp(28px, 8vw, 40px);
+        letter-spacing: -0.5px;
+      }
+
+      .section-desc {
+        font-size: 15px;
+        margin-bottom: 40px;
+      }
+
+      .service-card {
+        padding: 24px;
+      }
+
+      .testimonial-card blockquote {
+        font-size: 20px;
+      }
+
+      .testimonial-card blockquote::before {
+        font-size: 80px;
+        top: -20px;
+        left: -10px;
+      }
+
+      .stats-bar {
+        padding: 40px 0;
+      }
+
+      .cta-section .btn-primary,
+      .cta-section .btn-secondary {
+        display: block;
+        width: 100%;
+        text-align: center;
+        justify-content: center;
+        font-size: 15px !important;
+        padding: 16px 24px !important;
+      }
+
+      .cta-section > .container > div[style] {
+        flex-direction: column !important;
+        gap: 16px !important;
+      }
+
+      .flow-node {
+        font-size: 11px;
+        padding: 9px 12px;
+        white-space: normal;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="container">
+      <div class="logo">RL-<span>Data</span></div>
+      <ul>
+        <li><a href="#uslugi">Usługi</a></li>
+        <li><a href="#case-studies">Case Studies</a></li>
+        <li><a href="#proces">Proces</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+      <a href="#kontakt" class="nav-cta">Bezpłatna konsultacja</a>
+      <button class="nav-hamburger" id="hamburger" aria-label="Menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- MOBILE MENU -->
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="#uslugi" onclick="closeMobileMenu()">Usługi</a></li>
+      <li><a href="#case-studies" onclick="closeMobileMenu()">Case Studies</a></li>
+      <li><a href="#proces" onclick="closeMobileMenu()">Proces</a></li>
+      <li><a href="#kontakt" onclick="closeMobileMenu()">Kontakt</a></li>
+      <li><a href="#kontakt" class="mobile-cta" onclick="closeMobileMenu()">Bezpłatna konsultacja</a></li>
+    </ul>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="hero-badge">● AI + Automatyzacja dla firm</div>
+          <h1>Integrujemy systemy i <em>automatyzujemy procesy</em> w Twojej firmie</h1>
+          <p>Specjalizujemy się w integracjach systemów biznesowych (ERP, CRM, e-commerce) oraz automatyzacji procesów z wykorzystaniem danych i AI.</p>
+          <div class="hero-actions">
+            <a href="#kontakt" class="btn-primary">Bezpłatna rozmowa — 30 min →</a>
+            <a href="#case-studies" class="btn-secondary">Zobacz co robimy</a>
+          </div>
+        </div>
+        <div class="hero-visual">
+          <div class="hero-card">
+            <div class="hero-card-inner">
+              <div class="flow-line">
+                <div class="flow-node">◆ Nowy mail od klienta</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-node active">🤖 AI analizuje</div>
+                <div class="flow-status running">● przetwarzanie</div>
+              </div>
+              <div class="flow-line">
+                <div class="flow-node">◆ Zapytanie ofertowe</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-node active">⚡ Auto-odpowiedź</div>
+                <div class="flow-status done">✓ wysłane</div>
+              </div>
+              <div class="flow-line">
+                <div class="flow-node">◆ Faktura PDF</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-node active">◆ Wpis do arkusza</div>
+                <div class="flow-status done">✓ ukończone</div>
+              </div>
+              <div class="flow-line">
+                <div class="flow-node">🔄 Automatyczny workflow</div>
+                <div class="flow-arrow">→</div>
+                <div class="flow-node active">◆ Raport — co tydzień</div>
+                <div class="flow-status running">● zaplanowane</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-grid">
+        <div>
+          <div class="stat-num">20 lat</div>
+          <div class="stat-label">Doświadczenia w IT i <span class="purple-accent">automatyzacji</span></div>
+        </div>
+        <div>
+          <div class="stat-num">AI + dane</div>
+          <div class="stat-label">Nowoczesne narzędzia, sprawdzone podejście</div>
+        </div>
+        <div>
+          <div class="stat-num">Dla firm</div>
+          <div class="stat-label">Małe i średnie firmy to nasz cel</div>
+        </div>
+        <div>
+          <div class="stat-num">0 zł</div>
+          <div class="stat-label">Bezpłatna rozmowa i wstępny audyt</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="section" id="uslugi">
+    <div class="container">
+      <div class="section-label">Co robimy</div>
+      <div class="section-title">Jakie zadania automatyzujemy?</div>
+      <div class="section-desc">Zabieramy Ci z głowy powtarzalne, nudne zadania — a Ty zajmujesz się tym, co naprawdę
+        ważne w firmie.</div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">✉️</div>
+          <h3>Maile i odpowiedzi na zapytania</h3>
+          <p>AI czyta przychodzące maile, klasyfikuje je i przygotowuje odpowiedzi. Ty tylko zatwierdzasz —
+            albo leci automatycznie.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">⚡</div>
+          <h3><span class="purple-accent">Automatyzacja</span> codziennych zadań</h3>
+          <p>Faktury, follow-upy, przypomnienia, wpisy do arkuszy — wszystko, co robisz ręcznie i regularnie,
+            automatyzujemy w jednym spójnym systemie.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🔗</div>
+          <h3>Łączenie systemów</h3>
+          <p>Twój sklep, CRM, kalendarz, arkusze i poczta — synchronizujemy je, żeby dane przepływały same bez ręcznego
+            kopiowania.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📄</div>
+          <h3>Dokumenty i faktury</h3>
+          <p>AI odczytuje dane z faktur PDF, umów i formularzy. Trafiają automatycznie tam, gdzie powinny — do arkusza,
+            systemu, maila.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🤖</div>
+          <h3><span class="purple-accent">AI</span> w Twojej firmie</h3>
+          <p>Chatbot na stronie, asystent do ofertowania, podsumowania spotkań — wdrażamy AI tam, gdzie realnie
+            oszczędza Twój czas.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">📊</div>
+          <h3>Raporty same z siebie</h3>
+          <p>Co tydzień dostajesz gotowy raport na maila — sprzedaż, koszty, klienci. Bez klikania, bez Excela. Wszystko
+            automatycznie.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CASE STUDIES -->
+  <section class="section" id="case-studies"
+    style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
+    <div class="container">
+      <div class="section-label">Doświadczenie</div>
+      <div class="section-title">Projekty, w których braliśmy udział</div>
+      <div class="section-desc">20 lat doświadczenia w danych, integracjach i automatyzacji — oto wybrane projekty z
+        naszego portfolio.</div>
+
+      <div class="cases-grid">
+        <!-- CASE 1 -->
+        <div class="case-card">
+          <div class="case-visual">
+            <div class="case-metric-grid">
+              <div class="case-metric">
+                <div class="case-metric-val">Znaczące</div>
+                <div class="case-metric-label">Przyspieszenie przetwarzania danych</div>
+              </div>
+              <div class="case-metric">
+                <div class="case-metric-val">Bez opóźnień</div>
+                <div class="case-metric-label">Start pracy analityków</div>
+              </div>
+              <div class="case-metric">
+                <div class="case-metric-val">Sprawniejsza</div>
+                <div class="case-metric-label">Praca użytkowników końcowych</div>
+              </div>
+              <div class="case-metric">
+                <div class="case-metric-val">Duża skala</div>
+                <div class="case-metric-label">System operujący na dużej skali danych</div>
+              </div>
+            </div>
+          </div>
+          <div class="case-content">
+            <div class="case-tag">Retail · Optymalizacja danych</div>
+            <h3>Przyspieszenie pracy z danymi w środowisku retail</h3>
+            <p><strong>Kontekst:</strong> Projekt realizowany dla jednej z większych sieci retail w Europie. System operował na bardzo dużej bazie danych wykorzystywanej przez analityków biznesowych w codziennej pracy operacyjnej.</p>
+            <p><strong>Problem:</strong> Wolne przetwarzanie danych, opóźniony start pracy analityków, spadek
+              efektywności operacyjnej.</p>
+            <p><strong>Zakres pracy:</strong> Udział w pracach nad optymalizacją przetwarzania danych — analiza zapytań
+              i logiki przetwarzania, identyfikacja wąskich gardeł, usprawnienie działania przebiegów danych.</p>
+            <p><strong>Efekt:</strong> Przyspieszenie przetwarzania o kilkadziesiąt procent, sprawniejszy start pracy
+              zespołów analitycznych, sprawniejsza praca użytkowników końcowych.</p>
+          </div>
+        </div>
+
+        <!-- CASE 2 -->
+        <div class="case-card">
+          <div class="case-visual">
+            <div class="case-metric-grid">
+              <div class="case-metric">
+                <div class="case-metric-val">Automatyczne</div>
+                <div class="case-metric-label">Raporty dla kilkunastu suszarni</div>
+              </div>
+              <div class="case-metric">
+                <div class="case-metric-val">Ograniczenie</div>
+                <div class="case-metric-label">Ręcznej pracy przy analizie danych</div>
+              </div>
+              <div class="case-metric">
+                <div class="case-metric-val">Szybszy</div>
+                <div class="case-metric-label">Dostęp do informacji operacyjnych</div>
+              </div>
+              <div class="case-metric">
+                <div class="case-metric-val">Spójność</div>
+                <div class="case-metric-label">Raportowania w wielu lokalizacjach</div>
+              </div>
+            </div>
+          </div>
+          <div class="case-content">
+            <div class="case-tag">Produkcja · Raportowanie</div>
+            <h3>Automatyczne raportowanie danych produkcyjnych w suszarniach drewna</h3>
+            <p><strong>Kontekst:</strong> Przygotowanie aplikacji do generowania raportów i wykresów IPPC dla suszarni
+              drewna działających w wielu lokalizacjach w Polsce. System opierał się na danych zbieranych bezpośrednio z
+              czujników produkcyjnych.</p>
+            <p><strong>Problem:</strong> Rozproszone dane z urządzeń, ręczne przygotowywanie raportów, czasochłonna
+              analiza parametrów pracy suszarni, brak spójnego widoku danych operacyjnych.</p>
+            <p><strong>Zakres pracy:</strong> Projekt i przygotowanie rozwiązania do automatycznego raportowania —
+              pobieranie danych z czujników, przetwarzanie i agregacja danych, automatyczne generowanie raportów i
+              wykresów, uporządkowanie pracy z danymi produkcyjnymi.</p>
+            <p><strong>Efekt:</strong> Automatyczne raporty dla kilkunastu suszarni, ograniczenie ręcznej pracy przy
+              analizie danych, szybszy dostęp do informacji operacyjnych, większa spójność raportowania w wielu
+              lokalizacjach.</p>
+          </div>
+        </div>
+
+        <!-- CASE 3 -->
+        <div class="case-card">
+          <div class="case-visual">
+            <div class="case-metric-grid">
+              <div class="case-metric">
+                <div class="case-metric-val">Automatyczny</div>
+                <div class="case-metric-label">Transfer danych między systemami</div>
+              </div>
+              <div class="case-metric">
+                <div class="case-metric-val">Aktualne</div>
+                <div class="case-metric-label">Stany magazynowe w sprzedaży</div>
+              </div>
+              <div class="case-metric">
+                <div class="case-metric-val">Ograniczenie</div>
+                <div class="case-metric-label">Ręcznej pracy operacyjnej</div>
+              </div>
+              <div class="case-metric">
+                <div class="case-metric-val">Spójność</div>
+                <div class="case-metric-label">Danych w procesie realizacji zamówień</div>
+              </div>
+            </div>
+          </div>
+          <div class="case-content">
+            <div class="case-tag">E-commerce · Integracja systemów</div>
+            <h3>Automatyzacja przepływu zamówień i stanów magazynowych między systemami</h3>
+            <p><strong>Kontekst:</strong> Projekt integracji systemów e-commerce i magazynowych w celu uporządkowania
+              przepływu danych o zamówieniach i stanach magazynowych.</p>
+            <p><strong>Problem:</strong> Brak spójności danych między systemami, ręczne przenoszenie informacji o
+              zamówieniach, opóźnienia w aktualizacji stanów magazynowych, ryzyko błędów i nieaktualnych danych.</p>
+            <p><strong>Zakres pracy:</strong> Przygotowanie i automatyzacja procesu wymiany danych między systemami —
+              integracja PrestaShop, Baselinker i Hermes Humansoft, synchronizacja zamówień i stanów magazynowych,
+              uporządkowanie przepływu danych operacyjnych.</p>
+            <p><strong>Efekt:</strong> Automatyczny transfer danych między systemami, aktualne stany magazynowe w
+              sprzedaży, ograniczenie ręcznej pracy operacyjnej, większa spójność danych w procesie realizacji zamówień.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROCESS -->
+  <section class="section" id="proces">
+    <div class="container">
+      <div class="section-label">Jak to działa</div>
+      <div class="section-title">4 proste kroki</div>
+      <div class="section-desc">Bez ryzyka i bez zobowiązań — zaczynamy od rozmowy i pokazujemy efekty, zanim zapłacisz.
+      </div>
+      <div class="process-steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h4>Rozmawiamy</h4>
+          <p>Opowiedz co Cię męczy — jakie zadania robisz ręcznie, co Ci zabiera czas. Bezpłatna rozmowa, 30 minut.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h4>Pokazujemy rozwiązanie</h4>
+          <p>Przygotowujemy demo — pokazujemy jak <span class="purple-accent">AI i automatyzacja</span> rozwiążą Twój konkretny
+            problem. Widzisz efekt zanim podejmiesz decyzję.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h4>Wdrażamy</h4>
+          <p>Budujemy i uruchamiamy <span class="purple-accent">automatyzację</span>. Ty testujesz, my poprawiamy — aż
+            działa dokładnie tak jak potrzebujesz.</p>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <h4>Działa i rośnie</h4>
+          <p>Twoja <span class="purple-accent">automatyzacja</span> pracuje 24/7. Gdy zobaczysz efekty — dodajemy
+            kolejne. Ty oszczędzasz coraz więcej czasu.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="section cta-section" id="kontakt">
+    <div class="container">
+      <div class="section-label">Zacznij teraz</div>
+      <div class="section-title">Które zadanie chcesz zautomatyzować?</div>
+      <div class="section-desc">Napisz lub zadzwoń — porozmawiamy 30 minut za darmo. Powiem Ci co da się zautomatyzować
+        i ile czasu zaoszczędzisz.</div>
+      <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap;">
+        <a href="/cdn-cgi/l/email-protection#b9cbd8df97d5c0ddccdad1f9ded4d8d0d597dad6d4" class="btn-primary" style="font-size:16px; padding:18px 40px;">
+          ✉ <span class="__cf_email__" data-cfemail="691b080f4705100d1c0a01290e04080005470a0604">[email&#160;protected]</span>
+        </a>
+        <a href="tel:+48606467049" class="btn-secondary" style="font-size:16px; padding:18px 40px;">
+          📞 +48 606-467-049
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">RL-<span>Data</span></div>
+          <p>Automatyzujemy powtarzalne zadania w firmach za pomocą AI i nowoczesnych narzędzi automatyzacji. 20 lat doświadczenia w IT, dane i
+            procesy.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Usługi</h4>
+          <a href="#">Integracje systemów</a>
+          <a href="#"><span class="purple-accent">Automatyzacja</span> procesów</a>
+          <a href="#">Raporty i dane</a>
+          <a href="#">Audyt i optymalizacja</a>
+        </div>
+        <div class="footer-col">
+          <h4>Firma</h4>
+          <a href="#">O nas</a>
+          <a href="#">Case Studies</a>
+          <a href="#">Blog</a>
+          <a href="#">Kariera</a>
+        </div>
+        <div class="footer-col">
+          <h4>Kontakt</h4>
+          <a href="/cdn-cgi/l/email-protection#9eecfff8b0f2e7faebfdf6def9f3fff7f2b0fdf1f3"><span class="__cf_email__" data-cfemail="453724236b293c2130262d052228242c296b262a28">[email&#160;protected]</span></a>
+          <a href="tel:+48606467049">+48 606-467-049</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2025 RL-Data. Wszelkie prawa zastrzeżone.</span>
+        <span>Automatyzacja · AI · Integracje</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+
+    hamburger.addEventListener('click', () => {
+      mobileMenu.classList.toggle('open');
+    });
+
+    function closeMobileMenu() {
+      mobileMenu.classList.remove('open');
+    }
+
+    // Close menu on outside click
+    document.addEventListener('click', (e) => {
+      if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
+        mobileMenu.classList.remove('open');
+      }
+    });
+  </script>
+</body>
+</html>
