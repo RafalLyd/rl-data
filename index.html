@@ -1405,9 +1405,19 @@
       <div class="section-desc">Napisz lub zadzwoń — porozmawiamy 30 minut za darmo. Powiem Ci co da się zautomatyzować
         i ile czasu zaoszczędzisz.</div>
       <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap;">
-        <a href="mailto:raf.lyduch@gmail.com" class="btn-primary" style="font-size:16px; padding:18px 40px;">
-          ✉ raf.lyduch@gmail.com
-        </a>
+      <a id="email-link" href="#" class="btn-primary" style="font-size:16px; padding:18px 40px;">
+        ✉ Napisz maila
+      </a>
+      
+      <script>
+        const user = "raf.lyduch";
+        const domain = "gmail.com";
+        const email = `${user}@${domain}`;
+      
+        const emailLink = document.getElementById("email-link");
+        emailLink.href = `mailto:${email}`;
+        emailLink.innerHTML = `✉ ${email}`;
+      </script>
         <a href="tel:+48606467049" class="btn-secondary" style="font-size:16px; padding:18px 40px;">
           📞 +48 606-467-049
         </a>
@@ -1440,7 +1450,12 @@
         </div>
         <div class="footer-col">
           <h4>Kontakt</h4>
-          <a href="mailto:raf.lyduch@gmail.com">raf.lyduch@gmail.com</a>
+          <a id="footer-email" href="#"></a>
+          <script>
+            const footerEmail = document.getElementById("footer-email");
+            footerEmail.href = `mailto:${email}`;
+            footerEmail.textContent = email;
+          </script>
           <a href="tel:+48606467049">+48 606-467-049</a>
         </div>
       </div>
