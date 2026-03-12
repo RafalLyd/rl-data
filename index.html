@@ -58,6 +58,42 @@
       padding: 0 32px;
     }
 
+    /* LANG SWITCHER */
+    .lang-switch {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      background: var(--surface-2);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      padding: 3px;
+      margin-right: 16px;
+      cursor: pointer;
+      position: relative;
+      user-select: none;
+    }
+
+    .lang-switch-btn {
+      padding: 5px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: var(--text-muted);
+      border-radius: 100px;
+      transition: all .3s;
+      position: relative;
+      z-index: 1;
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .lang-switch-btn.active {
+      color: #fff;
+      background: var(--accent);
+    }
+
     /* NAV */
     nav {
       position: fixed;
@@ -85,6 +121,12 @@
 
     .logo span {
       color: var(--accent);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0;
     }
 
     nav ul {
@@ -884,6 +926,32 @@
       border-bottom: none !important;
     }
 
+    .mobile-lang-switch {
+      display: flex;
+      gap: 8px;
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mobile-lang-btn {
+      padding: 6px 18px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      transition: all .3s;
+    }
+
+    .mobile-lang-btn.active {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent);
+    }
+
     /* RESPONSIVE */
     @media (max-width: 900px) {
       .container {
@@ -891,7 +959,8 @@
       }
 
       nav ul,
-      .nav-cta {
+      .nav-cta,
+      .lang-switch {
         display: none;
       }
 
@@ -1093,12 +1162,18 @@
     <div class="container">
       <div class="logo">RL-<span>Data</span></div>
       <ul>
-        <li><a href="#uslugi">Usługi</a></li>
+        <li><a href="#uslugi" data-pl="Usługi" data-en="Services">Usługi</a></li>
         <li><a href="#case-studies">Case Studies</a></li>
-        <li><a href="#proces">Proces</a></li>
-        <li><a href="#kontakt">Kontakt</a></li>
+        <li><a href="#proces" data-pl="Proces" data-en="Process">Proces</a></li>
+        <li><a href="#kontakt" data-pl="Kontakt" data-en="Contact">Kontakt</a></li>
       </ul>
-      <a href="#kontakt" class="nav-cta">Bezpłatna konsultacja</a>
+      <div class="nav-right">
+        <div class="lang-switch">
+          <button class="lang-switch-btn active" data-lang="pl" onclick="setLang('pl')">PL</button>
+          <button class="lang-switch-btn" data-lang="en" onclick="setLang('en')">EN</button>
+        </div>
+        <a href="#kontakt" class="nav-cta" data-pl="Bezpłatna konsultacja" data-en="Free consultation">Bezpłatna konsultacja</a>
+      </div>
       <button class="nav-hamburger" id="hamburger" aria-label="Menu">
         <span></span>
         <span></span>
@@ -1110,11 +1185,17 @@
   <!-- MOBILE MENU -->
   <div class="mobile-menu" id="mobileMenu">
     <ul>
-      <li><a href="#uslugi" onclick="closeMobileMenu()">Usługi</a></li>
+      <li>
+        <div class="mobile-lang-switch">
+          <button class="mobile-lang-btn active" data-lang="pl" onclick="setLang('pl')">PL</button>
+          <button class="mobile-lang-btn" data-lang="en" onclick="setLang('en')">EN</button>
+        </div>
+      </li>
+      <li><a href="#uslugi" onclick="closeMobileMenu()" data-pl="Usługi" data-en="Services">Usługi</a></li>
       <li><a href="#case-studies" onclick="closeMobileMenu()">Case Studies</a></li>
-      <li><a href="#proces" onclick="closeMobileMenu()">Proces</a></li>
-      <li><a href="#kontakt" onclick="closeMobileMenu()">Kontakt</a></li>
-      <li><a href="#kontakt" class="mobile-cta" onclick="closeMobileMenu()">Bezpłatna konsultacja</a></li>
+      <li><a href="#proces" onclick="closeMobileMenu()" data-pl="Proces" data-en="Process">Proces</a></li>
+      <li><a href="#kontakt" onclick="closeMobileMenu()" data-pl="Kontakt" data-en="Contact">Kontakt</a></li>
+      <li><a href="#kontakt" class="mobile-cta" onclick="closeMobileMenu()" data-pl="Bezpłatna konsultacja" data-en="Free consultation">Bezpłatna konsultacja</a></li>
     </ul>
   </div>
 
@@ -1123,40 +1204,40 @@
     <div class="container">
       <div class="hero-grid">
         <div>
-          <div class="hero-badge">● AI + Automatyzacja dla firm</div>
-          <h1>Integrujemy systemy i <em>automatyzujemy procesy</em> w Twojej firmie</h1>
-          <p>Specjalizujemy się w integracjach systemów biznesowych (ERP, CRM, e-commerce) oraz automatyzacji procesów z wykorzystaniem danych i AI.</p>
+          <div class="hero-badge" data-pl="● AI + Automatyzacja dla firm" data-en="● AI + Automation for business">● AI + Automatyzacja dla firm</div>
+          <h1 data-pl="Integrujemy systemy i <em>automatyzujemy procesy</em> w Twojej firmie" data-en="We integrate systems and <em>automate processes</em> in your business" data-html="true">Integrujemy systemy i <em>automatyzujemy procesy</em> w Twojej firmie</h1>
+          <p data-pl="Specjalizujemy się w integracjach systemów biznesowych (ERP, CRM, e-commerce) oraz automatyzacji procesów z wykorzystaniem danych i AI." data-en="We specialize in business system integrations (ERP, CRM, e-commerce) and process automation powered by data and AI.">Specjalizujemy się w integracjach systemów biznesowych (ERP, CRM, e-commerce) oraz automatyzacji procesów z wykorzystaniem danych i AI.</p>
           <div class="hero-actions">
-            <a href="#kontakt" class="btn-primary">Bezpłatna rozmowa — 30 min →</a>
-            <a href="#case-studies" class="btn-secondary">Zobacz co robimy</a>
+            <a href="#kontakt" class="btn-primary" data-pl="Bezpłatna rozmowa — 30 min →" data-en="Free consultation — 30 min →">Bezpłatna rozmowa — 30 min →</a>
+            <a href="#case-studies" class="btn-secondary" data-pl="Zobacz co robimy" data-en="See our work">Zobacz co robimy</a>
           </div>
         </div>
         <div class="hero-visual">
           <div class="hero-card">
             <div class="hero-card-inner">
               <div class="flow-line">
-                <div class="flow-node">◆ Nowy mail od klienta</div>
+                <div class="flow-node" data-pl="◆ Nowy mail od klienta" data-en="◆ New client email">◆ Nowy mail od klienta</div>
                 <div class="flow-arrow">→</div>
-                <div class="flow-node active">🤖 AI analizuje</div>
-                <div class="flow-status running">● przetwarzanie</div>
+                <div class="flow-node active" data-pl="🤖 AI analizuje" data-en="🤖 AI analyzes">🤖 AI analizuje</div>
+                <div class="flow-status running" data-pl="● przetwarzanie" data-en="● processing">● przetwarzanie</div>
               </div>
               <div class="flow-line">
-                <div class="flow-node">◆ Zapytanie ofertowe</div>
+                <div class="flow-node" data-pl="◆ Zapytanie ofertowe" data-en="◆ Quote request">◆ Zapytanie ofertowe</div>
                 <div class="flow-arrow">→</div>
-                <div class="flow-node active">⚡ Auto-odpowiedź</div>
-                <div class="flow-status done">✓ wysłane</div>
+                <div class="flow-node active" data-pl="⚡ Auto-odpowiedź" data-en="⚡ Auto-reply">⚡ Auto-odpowiedź</div>
+                <div class="flow-status done" data-pl="✓ wysłane" data-en="✓ sent">✓ wysłane</div>
               </div>
               <div class="flow-line">
-                <div class="flow-node">◆ Faktura PDF</div>
+                <div class="flow-node" data-pl="◆ Faktura PDF" data-en="◆ PDF Invoice">◆ Faktura PDF</div>
                 <div class="flow-arrow">→</div>
-                <div class="flow-node active">◆ Wpis do arkusza</div>
-                <div class="flow-status done">✓ ukończone</div>
+                <div class="flow-node active" data-pl="◆ Wpis do arkusza" data-en="◆ Logged to sheet">◆ Wpis do arkusza</div>
+                <div class="flow-status done" data-pl="✓ ukończone" data-en="✓ completed">✓ ukończone</div>
               </div>
               <div class="flow-line">
-                <div class="flow-node">🔄 Automatyczny workflow</div>
+                <div class="flow-node" data-pl="🔄 Automatyczny workflow" data-en="🔄 Automated workflow">🔄 Automatyczny workflow</div>
                 <div class="flow-arrow">→</div>
-                <div class="flow-node active">◆ Raport — co tydzień</div>
-                <div class="flow-status running">● zaplanowane</div>
+                <div class="flow-node active" data-pl="◆ Raport — co tydzień" data-en="◆ Report — weekly">◆ Raport — co tydzień</div>
+                <div class="flow-status running" data-pl="● zaplanowane" data-en="● scheduled">● zaplanowane</div>
               </div>
             </div>
           </div>
@@ -1170,20 +1251,20 @@
     <div class="container">
       <div class="stats-grid">
         <div>
-          <div class="stat-num">20 lat</div>
-          <div class="stat-label">Doświadczenia w IT i <span class="purple-accent">automatyzacji</span></div>
+          <div class="stat-num" data-pl="20 lat" data-en="20 years">20 lat</div>
+          <div class="stat-label" data-pl='Doświadczenia w IT i <span class="purple-accent">automatyzacji</span>' data-en='Experience in IT &amp; <span class="purple-accent">automation</span>' data-html="true">Doświadczenia w IT i <span class="purple-accent">automatyzacji</span></div>
         </div>
         <div>
-          <div class="stat-num">AI + dane</div>
-          <div class="stat-label">Nowoczesne narzędzia, sprawdzone podejście</div>
+          <div class="stat-num">AI + data</div>
+          <div class="stat-label" data-pl="Nowoczesne narzędzia, sprawdzone podejście" data-en="Modern tools, proven approach">Nowoczesne narzędzia, sprawdzone podejście</div>
         </div>
         <div>
-          <div class="stat-num">Dla firm</div>
-          <div class="stat-label">Małe i średnie firmy to nasz cel</div>
+          <div class="stat-num" data-pl="Dla firm" data-en="For SMBs">Dla firm</div>
+          <div class="stat-label" data-pl="Małe i średnie firmy to nasz cel" data-en="Small & medium businesses are our focus">Małe i średnie firmy to nasz cel</div>
         </div>
         <div>
-          <div class="stat-num">0 zł</div>
-          <div class="stat-label">Bezpłatna rozmowa i wstępny audyt</div>
+          <div class="stat-num" data-pl="0 zł" data-en="Free">0 zł</div>
+          <div class="stat-label" data-pl="Bezpłatna rozmowa i wstępny audyt" data-en="Free consultation and initial audit">Bezpłatna rozmowa i wstępny audyt</div>
         </div>
       </div>
     </div>
@@ -1192,46 +1273,39 @@
   <!-- SERVICES -->
   <section class="section" id="uslugi">
     <div class="container">
-      <div class="section-label">Co robimy</div>
-      <div class="section-title">Jakie zadania automatyzujemy?</div>
-      <div class="section-desc">Zabieramy Ci z głowy powtarzalne, nudne zadania — a Ty zajmujesz się tym, co naprawdę
-        ważne w firmie.</div>
+      <div class="section-label" data-pl="Co robimy" data-en="What we do">Co robimy</div>
+      <div class="section-title" data-pl="Jakie zadania automatyzujemy?" data-en="What tasks do we automate?">Jakie zadania automatyzujemy?</div>
+      <div class="section-desc" data-pl="Zabieramy Ci z głowy powtarzalne, nudne zadania — a Ty zajmujesz się tym, co naprawdę ważne w firmie." data-en="We take repetitive, tedious tasks off your plate — so you can focus on what truly matters in your business.">Zabieramy Ci z głowy powtarzalne, nudne zadania — a Ty zajmujesz się tym, co naprawdę ważne w firmie.</div>
       <div class="services-grid">
         <div class="service-card">
           <div class="service-icon">✉️</div>
-          <h3>Maile i odpowiedzi na zapytania</h3>
-          <p>AI czyta przychodzące maile, klasyfikuje je i przygotowuje odpowiedzi. Ty tylko zatwierdzasz —
-            albo leci automatycznie.</p>
+          <h3 data-pl="Maile i odpowiedzi na zapytania" data-en="Emails & inquiry responses">Maile i odpowiedzi na zapytania</h3>
+          <p data-pl="AI czyta przychodzące maile, klasyfikuje je i przygotowuje odpowiedzi. Ty tylko zatwierdzasz — albo leci automatycznie." data-en="AI reads incoming emails, classifies them, and drafts replies. You just approve — or let it run automatically.">AI czyta przychodzące maile, klasyfikuje je i przygotowuje odpowiedzi. Ty tylko zatwierdzasz — albo leci automatycznie.</p>
         </div>
         <div class="service-card">
           <div class="service-icon">⚡</div>
-          <h3><span class="purple-accent">Automatyzacja</span> codziennych zadań</h3>
-          <p>Faktury, follow-upy, przypomnienia, wpisy do arkuszy — wszystko, co robisz ręcznie i regularnie,
-            automatyzujemy w jednym spójnym systemie.</p>
+          <h3 data-pl='<span class="purple-accent">Automatyzacja</span> codziennych zadań' data-en='Daily task <span class="purple-accent">automation</span>' data-html="true"><span class="purple-accent">Automatyzacja</span> codziennych zadań</h3>
+          <p data-pl="Faktury, follow-upy, przypomnienia, wpisy do arkuszy — wszystko, co robisz ręcznie i regularnie, automatyzujemy w jednym spójnym systemie." data-en="Invoices, follow-ups, reminders, spreadsheet entries — everything you do manually and regularly, we automate in one cohesive system.">Faktury, follow-upy, przypomnienia, wpisy do arkuszy — wszystko, co robisz ręcznie i regularnie, automatyzujemy w jednym spójnym systemie.</p>
         </div>
         <div class="service-card">
           <div class="service-icon">🔗</div>
-          <h3>Łączenie systemów</h3>
-          <p>Twój sklep, CRM, kalendarz, arkusze i poczta — synchronizujemy je, żeby dane przepływały same bez ręcznego
-            kopiowania.</p>
+          <h3 data-pl="Łączenie systemów" data-en="System integration">Łączenie systemów</h3>
+          <p data-pl="Twój sklep, CRM, kalendarz, arkusze i poczta — synchronizujemy je, żeby dane przepływały same bez ręcznego kopiowania." data-en="Your store, CRM, calendar, spreadsheets and email — we sync them so data flows automatically without manual copying.">Twój sklep, CRM, kalendarz, arkusze i poczta — synchronizujemy je, żeby dane przepływały same bez ręcznego kopiowania.</p>
         </div>
         <div class="service-card">
           <div class="service-icon">📄</div>
-          <h3>Dokumenty i faktury</h3>
-          <p>AI odczytuje dane z faktur PDF, umów i formularzy. Trafiają automatycznie tam, gdzie powinny — do arkusza,
-            systemu, maila.</p>
+          <h3 data-pl="Dokumenty i faktury" data-en="Documents & invoices">Dokumenty i faktury</h3>
+          <p data-pl="AI odczytuje dane z faktur PDF, umów i formularzy. Trafiają automatycznie tam, gdzie powinny — do arkusza, systemu, maila." data-en="AI extracts data from PDF invoices, contracts and forms. Everything lands automatically where it should — spreadsheet, system, or email.">AI odczytuje dane z faktur PDF, umów i formularzy. Trafiają automatycznie tam, gdzie powinny — do arkusza, systemu, maila.</p>
         </div>
         <div class="service-card">
           <div class="service-icon">🤖</div>
-          <h3><span class="purple-accent">AI</span> w Twojej firmie</h3>
-          <p>Chatbot na stronie, asystent do ofertowania, podsumowania spotkań — wdrażamy AI tam, gdzie realnie
-            oszczędza Twój czas.</p>
+          <h3 data-pl='<span class="purple-accent">AI</span> w Twojej firmie' data-en='<span class="purple-accent">AI</span> for your business' data-html="true"><span class="purple-accent">AI</span> w Twojej firmie</h3>
+          <p data-pl="Chatbot na stronie, asystent do ofertowania, podsumowania spotkań — wdrażamy AI tam, gdzie realnie oszczędza Twój czas." data-en="Website chatbot, quoting assistant, meeting summaries — we deploy AI where it actually saves you time.">Chatbot na stronie, asystent do ofertowania, podsumowania spotkań — wdrażamy AI tam, gdzie realnie oszczędza Twój czas.</p>
         </div>
         <div class="service-card">
           <div class="service-icon">📊</div>
-          <h3>Raporty same z siebie</h3>
-          <p>Co tydzień dostajesz gotowy raport na maila — sprzedaż, koszty, klienci. Bez klikania, bez Excela. Wszystko
-            automatycznie.</p>
+          <h3 data-pl="Raporty same z siebie" data-en="Automated reports">Raporty same z siebie</h3>
+          <p data-pl="Co tydzień dostajesz gotowy raport na maila — sprzedaż, koszty, klienci. Bez klikania, bez Excela. Wszystko automatycznie." data-en="Every week you get a ready report in your inbox — sales, costs, clients. No clicking, no Excel. Fully automated.">Co tydzień dostajesz gotowy raport na maila — sprzedaż, koszty, klienci. Bez klikania, bez Excela. Wszystko automatycznie.</p>
         </div>
       </div>
     </div>
@@ -1241,10 +1315,9 @@
   <section class="section" id="case-studies"
     style="background: var(--surface); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);">
     <div class="container">
-      <div class="section-label">Doświadczenie</div>
-      <div class="section-title">Projekty, w których braliśmy udział</div>
-      <div class="section-desc">20 lat doświadczenia w danych, integracjach i automatyzacji — oto wybrane projekty z
-        naszego portfolio.</div>
+      <div class="section-label" data-pl="Doświadczenie" data-en="Experience">Doświadczenie</div>
+      <div class="section-title" data-pl="Projekty, w których braliśmy udział" data-en="Projects we've been part of">Projekty, w których braliśmy udział</div>
+      <div class="section-desc" data-pl="20 lat doświadczenia w danych, integracjach i automatyzacji — oto wybrane projekty z naszego portfolio." data-en="20 years of experience in data, integrations and automation — here are selected projects from our portfolio.">20 lat doświadczenia w danych, integracjach i automatyzacji — oto wybrane projekty z naszego portfolio.</div>
 
       <div class="cases-grid">
         <!-- CASE 1 -->
@@ -1252,33 +1325,30 @@
           <div class="case-visual">
             <div class="case-metric-grid">
               <div class="case-metric">
-                <div class="case-metric-val">Znaczące</div>
-                <div class="case-metric-label">Przyspieszenie przetwarzania danych</div>
+                <div class="case-metric-val" data-pl="Znaczące" data-en="Significant">Znaczące</div>
+                <div class="case-metric-label" data-pl="Przyspieszenie przetwarzania danych" data-en="Data processing acceleration">Przyspieszenie przetwarzania danych</div>
               </div>
               <div class="case-metric">
-                <div class="case-metric-val">Bez opóźnień</div>
-                <div class="case-metric-label">Start pracy analityków</div>
+                <div class="case-metric-val" data-pl="Bez opóźnień" data-en="No delays">Bez opóźnień</div>
+                <div class="case-metric-label" data-pl="Start pracy analityków" data-en="Analyst work start time">Start pracy analityków</div>
               </div>
               <div class="case-metric">
-                <div class="case-metric-val">Sprawniejsza</div>
-                <div class="case-metric-label">Praca użytkowników końcowych</div>
+                <div class="case-metric-val" data-pl="Sprawniejsza" data-en="More efficient">Sprawniejsza</div>
+                <div class="case-metric-label" data-pl="Praca użytkowników końcowych" data-en="End-user workflows">Praca użytkowników końcowych</div>
               </div>
               <div class="case-metric">
-                <div class="case-metric-val">Duża skala</div>
-                <div class="case-metric-label">System operujący na dużej skali danych</div>
+                <div class="case-metric-val" data-pl="Duża skala" data-en="Large scale">Duża skala</div>
+                <div class="case-metric-label" data-pl="System operujący na dużej skali danych" data-en="System operating on large-scale data">System operujący na dużej skali danych</div>
               </div>
             </div>
           </div>
           <div class="case-content">
-            <div class="case-tag">Retail · Optymalizacja danych</div>
-            <h3>Przyspieszenie pracy z danymi w środowisku retail</h3>
-            <p><strong>Kontekst:</strong> Projekt realizowany dla jednej z większych sieci retail w Europie. System operował na bardzo dużej bazie danych wykorzystywanej przez analityków biznesowych w codziennej pracy operacyjnej.</p>
-            <p><strong>Problem:</strong> Wolne przetwarzanie danych, opóźniony start pracy analityków, spadek
-              efektywności operacyjnej.</p>
-            <p><strong>Zakres pracy:</strong> Udział w pracach nad optymalizacją przetwarzania danych — analiza zapytań
-              i logiki przetwarzania, identyfikacja wąskich gardeł, usprawnienie działania przebiegów danych.</p>
-            <p><strong>Efekt:</strong> Przyspieszenie przetwarzania o kilkadziesiąt procent, sprawniejszy start pracy
-              zespołów analitycznych, sprawniejsza praca użytkowników końcowych.</p>
+            <div class="case-tag" data-pl="Retail · Optymalizacja danych" data-en="Retail · Data optimization">Retail · Optymalizacja danych</div>
+            <h3 data-pl="Przyspieszenie pracy z danymi w środowisku retail" data-en="Accelerating data workflows in a retail environment">Przyspieszenie pracy z danymi w środowisku retail</h3>
+            <p data-pl="<strong>Kontekst:</strong> Projekt realizowany dla jednej z większych sieci retail w Europie. System operował na bardzo dużej bazie danych wykorzystywanej przez analityków biznesowych w codziennej pracy operacyjnej." data-en="<strong>Context:</strong> Project delivered for one of Europe's larger retail chains. The system operated on a very large database used by business analysts in their daily operational work." data-html="true"><strong>Kontekst:</strong> Projekt realizowany dla jednej z większych sieci retail w Europie. System operował na bardzo dużej bazie danych wykorzystywanej przez analityków biznesowych w codziennej pracy operacyjnej.</p>
+            <p data-pl="<strong>Problem:</strong> Wolne przetwarzanie danych, opóźniony start pracy analityków, spadek efektywności operacyjnej." data-en="<strong>Problem:</strong> Slow data processing, delayed analyst start times, declining operational efficiency." data-html="true"><strong>Problem:</strong> Wolne przetwarzanie danych, opóźniony start pracy analityków, spadek efektywności operacyjnej.</p>
+            <p data-pl="<strong>Zakres pracy:</strong> Udział w pracach nad optymalizacją przetwarzania danych — analiza zapytań i logiki przetwarzania, identyfikacja wąskich gardeł, usprawnienie działania przebiegów danych." data-en="<strong>Scope:</strong> Participation in data processing optimization — query and processing logic analysis, bottleneck identification, streamlining data pipelines." data-html="true"><strong>Zakres pracy:</strong> Udział w pracach nad optymalizacją przetwarzania danych — analiza zapytań i logiki przetwarzania, identyfikacja wąskich gardeł, usprawnienie działania przebiegów danych.</p>
+            <p data-pl="<strong>Efekt:</strong> Przyspieszenie przetwarzania o kilkadziesiąt procent, sprawniejszy start pracy zespołów analitycznych, sprawniejsza praca użytkowników końcowych." data-en="<strong>Result:</strong> Processing acceleration by tens of percent, faster analyst team start times, more efficient end-user workflows." data-html="true"><strong>Efekt:</strong> Przyspieszenie przetwarzania o kilkadziesiąt procent, sprawniejszy start pracy zespołów analitycznych, sprawniejsza praca użytkowników końcowych.</p>
           </div>
         </div>
 
@@ -1287,37 +1357,30 @@
           <div class="case-visual">
             <div class="case-metric-grid">
               <div class="case-metric">
-                <div class="case-metric-val">Automatyczne</div>
-                <div class="case-metric-label">Raporty dla kilkunastu suszarni</div>
+                <div class="case-metric-val" data-pl="Automatyczne" data-en="Automated">Automatyczne</div>
+                <div class="case-metric-label" data-pl="Raporty dla kilkunastu suszarni" data-en="Reports for multiple drying facilities">Raporty dla kilkunastu suszarni</div>
               </div>
               <div class="case-metric">
-                <div class="case-metric-val">Ograniczenie</div>
-                <div class="case-metric-label">Ręcznej pracy przy analizie danych</div>
+                <div class="case-metric-val" data-pl="Ograniczenie" data-en="Reduced">Ograniczenie</div>
+                <div class="case-metric-label" data-pl="Ręcznej pracy przy analizie danych" data-en="Manual work in data analysis">Ręcznej pracy przy analizie danych</div>
               </div>
               <div class="case-metric">
-                <div class="case-metric-val">Szybszy</div>
-                <div class="case-metric-label">Dostęp do informacji operacyjnych</div>
+                <div class="case-metric-val" data-pl="Szybszy" data-en="Faster">Szybszy</div>
+                <div class="case-metric-label" data-pl="Dostęp do informacji operacyjnych" data-en="Access to operational data">Dostęp do informacji operacyjnych</div>
               </div>
               <div class="case-metric">
-                <div class="case-metric-val">Spójność</div>
-                <div class="case-metric-label">Raportowania w wielu lokalizacjach</div>
+                <div class="case-metric-val" data-pl="Spójność" data-en="Consistency">Spójność</div>
+                <div class="case-metric-label" data-pl="Raportowania w wielu lokalizacjach" data-en="Reporting across multiple locations">Raportowania w wielu lokalizacjach</div>
               </div>
             </div>
           </div>
           <div class="case-content">
-            <div class="case-tag">Produkcja · Raportowanie</div>
-            <h3>Automatyczne raportowanie danych produkcyjnych w suszarniach drewna</h3>
-            <p><strong>Kontekst:</strong> Przygotowanie aplikacji do generowania raportów i wykresów IPPC dla suszarni
-              drewna działających w wielu lokalizacjach w Polsce. System opierał się na danych zbieranych bezpośrednio z
-              czujników produkcyjnych.</p>
-            <p><strong>Problem:</strong> Rozproszone dane z urządzeń, ręczne przygotowywanie raportów, czasochłonna
-              analiza parametrów pracy suszarni, brak spójnego widoku danych operacyjnych.</p>
-            <p><strong>Zakres pracy:</strong> Projekt i przygotowanie rozwiązania do automatycznego raportowania —
-              pobieranie danych z czujników, przetwarzanie i agregacja danych, automatyczne generowanie raportów i
-              wykresów, uporządkowanie pracy z danymi produkcyjnymi.</p>
-            <p><strong>Efekt:</strong> Automatyczne raporty dla kilkunastu suszarni, ograniczenie ręcznej pracy przy
-              analizie danych, szybszy dostęp do informacji operacyjnych, większa spójność raportowania w wielu
-              lokalizacjach.</p>
+            <div class="case-tag" data-pl="Produkcja · Raportowanie" data-en="Manufacturing · Reporting">Produkcja · Raportowanie</div>
+            <h3 data-pl="Automatyczne raportowanie danych produkcyjnych w suszarniach drewna" data-en="Automated production data reporting in wood drying facilities">Automatyczne raportowanie danych produkcyjnych w suszarniach drewna</h3>
+            <p data-pl="<strong>Kontekst:</strong> Przygotowanie aplikacji do generowania raportów i wykresów IPPC dla suszarni drewna działających w wielu lokalizacjach w Polsce. System opierał się na danych zbieranych bezpośrednio z czujników produkcyjnych." data-en="<strong>Context:</strong> Development of an application for generating IPPC reports and charts for wood drying facilities operating across multiple locations in Poland. The system was based on data collected directly from production sensors." data-html="true"><strong>Kontekst:</strong> Przygotowanie aplikacji do generowania raportów i wykresów IPPC dla suszarni drewna działających w wielu lokalizacjach w Polsce. System opierał się na danych zbieranych bezpośrednio z czujników produkcyjnych.</p>
+            <p data-pl="<strong>Problem:</strong> Rozproszone dane z urządzeń, ręczne przygotowywanie raportów, czasochłonna analiza parametrów pracy suszarni, brak spójnego widoku danych operacyjnych." data-en="<strong>Problem:</strong> Scattered device data, manual report preparation, time-consuming analysis of drying parameters, no unified view of operational data." data-html="true"><strong>Problem:</strong> Rozproszone dane z urządzeń, ręczne przygotowywanie raportów, czasochłonna analiza parametrów pracy suszarni, brak spójnego widoku danych operacyjnych.</p>
+            <p data-pl="<strong>Zakres pracy:</strong> Projekt i przygotowanie rozwiązania do automatycznego raportowania — pobieranie danych z czujników, przetwarzanie i agregacja danych, automatyczne generowanie raportów i wykresów, uporządkowanie pracy z danymi produkcyjnymi." data-en="<strong>Scope:</strong> Design and implementation of an automated reporting solution — sensor data collection, data processing and aggregation, automated report and chart generation, streamlined production data management." data-html="true"><strong>Zakres pracy:</strong> Projekt i przygotowanie rozwiązania do automatycznego raportowania — pobieranie danych z czujników, przetwarzanie i agregacja danych, automatyczne generowanie raportów i wykresów, uporządkowanie pracy z danymi produkcyjnymi.</p>
+            <p data-pl="<strong>Efekt:</strong> Automatyczne raporty dla kilkunastu suszarni, ograniczenie ręcznej pracy przy analizie danych, szybszy dostęp do informacji operacyjnych, większa spójność raportowania w wielu lokalizacjach." data-en="<strong>Result:</strong> Automated reports for multiple drying facilities, reduced manual data analysis work, faster access to operational information, improved reporting consistency across locations." data-html="true"><strong>Efekt:</strong> Automatyczne raporty dla kilkunastu suszarni, ograniczenie ręcznej pracy przy analizie danych, szybszy dostęp do informacji operacyjnych, większa spójność raportowania w wielu lokalizacjach.</p>
           </div>
         </div>
 
@@ -1326,36 +1389,30 @@
           <div class="case-visual">
             <div class="case-metric-grid">
               <div class="case-metric">
-                <div class="case-metric-val">Automatyczny</div>
-                <div class="case-metric-label">Transfer danych między systemami</div>
+                <div class="case-metric-val" data-pl="Automatyczny" data-en="Automated">Automatyczny</div>
+                <div class="case-metric-label" data-pl="Transfer danych między systemami" data-en="Data transfer between systems">Transfer danych między systemami</div>
               </div>
               <div class="case-metric">
-                <div class="case-metric-val">Aktualne</div>
-                <div class="case-metric-label">Stany magazynowe w sprzedaży</div>
+                <div class="case-metric-val" data-pl="Aktualne" data-en="Up-to-date">Aktualne</div>
+                <div class="case-metric-label" data-pl="Stany magazynowe w sprzedaży" data-en="Inventory levels in sales">Stany magazynowe w sprzedaży</div>
               </div>
               <div class="case-metric">
-                <div class="case-metric-val">Ograniczenie</div>
-                <div class="case-metric-label">Ręcznej pracy operacyjnej</div>
+                <div class="case-metric-val" data-pl="Ograniczenie" data-en="Reduced">Ograniczenie</div>
+                <div class="case-metric-label" data-pl="Ręcznej pracy operacyjnej" data-en="Manual operational work">Ręcznej pracy operacyjnej</div>
               </div>
               <div class="case-metric">
-                <div class="case-metric-val">Spójność</div>
-                <div class="case-metric-label">Danych w procesie realizacji zamówień</div>
+                <div class="case-metric-val" data-pl="Spójność" data-en="Consistency">Spójność</div>
+                <div class="case-metric-label" data-pl="Danych w procesie realizacji zamówień" data-en="Data in order fulfillment process">Danych w procesie realizacji zamówień</div>
               </div>
             </div>
           </div>
           <div class="case-content">
-            <div class="case-tag">E-commerce · Integracja systemów</div>
-            <h3>Automatyzacja przepływu zamówień i stanów magazynowych między systemami</h3>
-            <p><strong>Kontekst:</strong> Projekt integracji systemów e-commerce i magazynowych w celu uporządkowania
-              przepływu danych o zamówieniach i stanach magazynowych.</p>
-            <p><strong>Problem:</strong> Brak spójności danych między systemami, ręczne przenoszenie informacji o
-              zamówieniach, opóźnienia w aktualizacji stanów magazynowych, ryzyko błędów i nieaktualnych danych.</p>
-            <p><strong>Zakres pracy:</strong> Przygotowanie i automatyzacja procesu wymiany danych między systemami —
-              integracja PrestaShop, Baselinker i Hermes Humansoft, synchronizacja zamówień i stanów magazynowych,
-              uporządkowanie przepływu danych operacyjnych.</p>
-            <p><strong>Efekt:</strong> Automatyczny transfer danych między systemami, aktualne stany magazynowe w
-              sprzedaży, ograniczenie ręcznej pracy operacyjnej, większa spójność danych w procesie realizacji zamówień.
-            </p>
+            <div class="case-tag" data-pl="E-commerce · Integracja systemów" data-en="E-commerce · System integration">E-commerce · Integracja systemów</div>
+            <h3 data-pl="Automatyzacja przepływu zamówień i stanów magazynowych między systemami" data-en="Automating order flow and inventory sync between systems">Automatyzacja przepływu zamówień i stanów magazynowych między systemami</h3>
+            <p data-pl="<strong>Kontekst:</strong> Projekt integracji systemów e-commerce i magazynowych w celu uporządkowania przepływu danych o zamówieniach i stanach magazynowych." data-en="<strong>Context:</strong> Integration project connecting e-commerce and warehouse systems to streamline order and inventory data flow." data-html="true"><strong>Kontekst:</strong> Projekt integracji systemów e-commerce i magazynowych w celu uporządkowania przepływu danych o zamówieniach i stanach magazynowych.</p>
+            <p data-pl="<strong>Problem:</strong> Brak spójności danych między systemami, ręczne przenoszenie informacji o zamówieniach, opóźnienia w aktualizacji stanów magazynowych, ryzyko błędów i nieaktualnych danych." data-en="<strong>Problem:</strong> Data inconsistency between systems, manual order information transfer, delayed inventory updates, risk of errors and outdated data." data-html="true"><strong>Problem:</strong> Brak spójności danych między systemami, ręczne przenoszenie informacji o zamówieniach, opóźnienia w aktualizacji stanów magazynowych, ryzyko błędów i nieaktualnych danych.</p>
+            <p data-pl="<strong>Zakres pracy:</strong> Przygotowanie i automatyzacja procesu wymiany danych między systemami — integracja PrestaShop, Baselinker i Hermes Humansoft, synchronizacja zamówień i stanów magazynowych, uporządkowanie przepływu danych operacyjnych." data-en="<strong>Scope:</strong> Design and automation of data exchange between systems — PrestaShop, Baselinker and Hermes Humansoft integration, order and inventory synchronization, streamlined operational data flow." data-html="true"><strong>Zakres pracy:</strong> Przygotowanie i automatyzacja procesu wymiany danych między systemami — integracja PrestaShop, Baselinker i Hermes Humansoft, synchronizacja zamówień i stanów magazynowych, uporządkowanie przepływu danych operacyjnych.</p>
+            <p data-pl="<strong>Efekt:</strong> Automatyczny transfer danych między systemami, aktualne stany magazynowe w sprzedaży, ograniczenie ręcznej pracy operacyjnej, większa spójność danych w procesie realizacji zamówień." data-en="<strong>Result:</strong> Automated data transfer between systems, up-to-date inventory in sales channels, reduced manual operational work, improved data consistency in order fulfillment." data-html="true"><strong>Efekt:</strong> Automatyczny transfer danych między systemami, aktualne stany magazynowe w sprzedaży, ograniczenie ręcznej pracy operacyjnej, większa spójność danych w procesie realizacji zamówień.</p>
           </div>
         </div>
       </div>
@@ -1365,33 +1422,29 @@
   <!-- PROCESS -->
   <section class="section" id="proces">
     <div class="container">
-      <div class="section-label">Jak to działa</div>
-      <div class="section-title">4 proste kroki</div>
-      <div class="section-desc">Bez ryzyka i bez zobowiązań — zaczynamy od rozmowy i pokazujemy efekty, zanim zapłacisz.
-      </div>
+      <div class="section-label" data-pl="Jak to działa" data-en="How it works">Jak to działa</div>
+      <div class="section-title" data-pl="4 proste kroki" data-en="4 simple steps">4 proste kroki</div>
+      <div class="section-desc" data-pl="Bez ryzyka i bez zobowiązań — zaczynamy od rozmowy i pokazujemy efekty, zanim zapłacisz." data-en="No risk, no commitment — we start with a conversation and show results before you pay.">Bez ryzyka i bez zobowiązań — zaczynamy od rozmowy i pokazujemy efekty, zanim zapłacisz.</div>
       <div class="process-steps">
         <div class="step">
           <div class="step-num">1</div>
-          <h4>Rozmawiamy</h4>
-          <p>Opowiedz co Cię męczy — jakie zadania robisz ręcznie, co Ci zabiera czas. Bezpłatna rozmowa, 30 minut.</p>
+          <h4 data-pl="Rozmawiamy" data-en="We talk">Rozmawiamy</h4>
+          <p data-pl="Opowiedz co Cię męczy — jakie zadania robisz ręcznie, co Ci zabiera czas. Bezpłatna rozmowa, 30 minut." data-en="Tell us what's bugging you — what tasks you do manually, what eats your time. Free call, 30 minutes.">Opowiedz co Cię męczy — jakie zadania robisz ręcznie, co Ci zabiera czas. Bezpłatna rozmowa, 30 minut.</p>
         </div>
         <div class="step">
           <div class="step-num">2</div>
-          <h4>Pokazujemy rozwiązanie</h4>
-          <p>Przygotowujemy demo — pokazujemy jak <span class="purple-accent">AI i automatyzacja</span> rozwiążą Twój konkretny
-            problem. Widzisz efekt zanim podejmiesz decyzję.</p>
+          <h4 data-pl="Pokazujemy rozwiązanie" data-en="We show a solution">Pokazujemy rozwiązanie</h4>
+          <p data-pl='Przygotowujemy demo — pokazujemy jak <span class="purple-accent">AI i automatyzacja</span> rozwiążą Twój konkretny problem. Widzisz efekt zanim podejmiesz decyzję.' data-en='We prepare a demo — showing how <span class="purple-accent">AI and automation</span> will solve your specific problem. You see results before making a decision.' data-html="true">Przygotowujemy demo — pokazujemy jak <span class="purple-accent">AI i automatyzacja</span> rozwiążą Twój konkretny problem. Widzisz efekt zanim podejmiesz decyzję.</p>
         </div>
         <div class="step">
           <div class="step-num">3</div>
-          <h4>Wdrażamy</h4>
-          <p>Budujemy i uruchamiamy <span class="purple-accent">automatyzację</span>. Ty testujesz, my poprawiamy — aż
-            działa dokładnie tak jak potrzebujesz.</p>
+          <h4 data-pl="Wdrażamy" data-en="We implement">Wdrażamy</h4>
+          <p data-pl='Budujemy i uruchamiamy <span class="purple-accent">automatyzację</span>. Ty testujesz, my poprawiamy — aż działa dokładnie tak jak potrzebujesz.' data-en='We build and launch the <span class="purple-accent">automation</span>. You test, we refine — until it works exactly the way you need.' data-html="true">Budujemy i uruchamiamy <span class="purple-accent">automatyzację</span>. Ty testujesz, my poprawiamy — aż działa dokładnie tak jak potrzebujesz.</p>
         </div>
         <div class="step">
           <div class="step-num">4</div>
-          <h4>Działa i rośnie</h4>
-          <p>Twoja <span class="purple-accent">automatyzacja</span> pracuje 24/7. Gdy zobaczysz efekty — dodajemy
-            kolejne. Ty oszczędzasz coraz więcej czasu.</p>
+          <h4 data-pl="Działa i rośnie" data-en="It works & grows">Działa i rośnie</h4>
+          <p data-pl='Twoja <span class="purple-accent">automatyzacja</span> pracuje 24/7. Gdy zobaczysz efekty — dodajemy kolejne. Ty oszczędzasz coraz więcej czasu.' data-en='Your <span class="purple-accent">automation</span> runs 24/7. Once you see results — we add more. You save more and more time.' data-html="true">Twoja <span class="purple-accent">automatyzacja</span> pracuje 24/7. Gdy zobaczysz efekty — dodajemy kolejne. Ty oszczędzasz coraz więcej czasu.</p>
         </div>
       </div>
     </div>
@@ -1400,10 +1453,9 @@
   <!-- CTA -->
   <section class="section cta-section" id="kontakt">
     <div class="container">
-      <div class="section-label">Zacznij teraz</div>
-      <div class="section-title">Które zadanie chcesz zautomatyzować?</div>
-      <div class="section-desc">Napisz lub zadzwoń — porozmawiamy 30 minut za darmo. Powiem Ci co da się zautomatyzować
-        i ile czasu zaoszczędzisz.</div>
+      <div class="section-label" data-pl="Zacznij teraz" data-en="Start now">Zacznij teraz</div>
+      <div class="section-title" data-pl="Które zadanie chcesz zautomatyzować?" data-en="Which task do you want to automate?">Które zadanie chcesz zautomatyzować?</div>
+      <div class="section-desc" data-pl="Napisz lub zadzwoń — porozmawiamy 30 minut za darmo. Powiem Ci co da się zautomatyzować i ile czasu zaoszczędzisz." data-en="Write or call — we'll talk for 30 minutes free. I'll tell you what can be automated and how much time you'll save.">Napisz lub zadzwoń — porozmawiamy 30 minut za darmo. Powiem Ci co da się zautomatyzować i ile czasu zaoszczędzisz.</div>
       <div style="display:flex; gap:24px; justify-content:center; flex-wrap:wrap;">
       <a id="email-link" href="#" class="btn-primary" style="font-size:16px; padding:18px 40px;">
         ✉ Napisz maila
@@ -1431,25 +1483,24 @@
       <div class="footer-grid">
         <div class="footer-brand">
           <div class="logo">RL-<span>Data</span></div>
-          <p>Automatyzujemy powtarzalne zadania w firmach za pomocą AI i nowoczesnych narzędzi automatyzacji. 20 lat doświadczenia w IT, dane i
-            procesy.</p>
+          <p data-pl="Automatyzujemy powtarzalne zadania w firmach za pomocą AI i nowoczesnych narzędzi automatyzacji. 20 lat doświadczenia w IT, dane i procesy." data-en="We automate repetitive business tasks using AI and modern automation tools. 20 years of experience in IT, data and processes.">Automatyzujemy powtarzalne zadania w firmach za pomocą AI i nowoczesnych narzędzi automatyzacji. 20 lat doświadczenia w IT, dane i procesy.</p>
         </div>
         <div class="footer-col">
-          <h4>Usługi</h4>
-          <a href="#">Integracje systemów</a>
-          <a href="#"><span class="purple-accent">Automatyzacja</span> procesów</a>
-          <a href="#">Raporty i dane</a>
-          <a href="#">Audyt i optymalizacja</a>
+          <h4 data-pl="Usługi" data-en="Services">Usługi</h4>
+          <a href="#" data-pl="Integracje systemów" data-en="System integrations">Integracje systemów</a>
+          <a href="#" data-pl='<span class="purple-accent">Automatyzacja</span> procesów' data-en='Process <span class="purple-accent">automation</span>' data-html="true"><span class="purple-accent">Automatyzacja</span> procesów</a>
+          <a href="#" data-pl="Raporty i dane" data-en="Reports & data">Raporty i dane</a>
+          <a href="#" data-pl="Audyt i optymalizacja" data-en="Audit & optimization">Audyt i optymalizacja</a>
         </div>
         <div class="footer-col">
-          <h4>Firma</h4>
-          <a href="#">O nas</a>
+          <h4 data-pl="Firma" data-en="Company">Firma</h4>
+          <a href="#" data-pl="O nas" data-en="About us">O nas</a>
           <a href="#">Case Studies</a>
           <a href="#">Blog</a>
-          <a href="#">Kariera</a>
+          <a href="#" data-pl="Kariera" data-en="Careers">Kariera</a>
         </div>
         <div class="footer-col">
-          <h4>Kontakt</h4>
+          <h4 data-pl="Kontakt" data-en="Contact">Kontakt</h4>
           <a id="footer-email" href="#"></a>
           <script>
             const footerEmail = document.getElementById("footer-email");
@@ -1460,13 +1511,47 @@
         </div>
       </div>
       <div class="footer-bottom">
-        <span>© 2025 RL-Data. Wszelkie prawa zastrzeżone.</span>
-        <span>Automatyzacja · AI · Integracje</span>
+        <span data-pl="© 2025 RL-Data. Wszelkie prawa zastrzeżone." data-en="© 2025 RL-Data. All rights reserved.">© 2025 RL-Data. Wszelkie prawa zastrzeżone.</span>
+        <span data-pl="Automatyzacja · AI · Integracje" data-en="Automation · AI · Integrations">Automatyzacja · AI · Integracje</span>
       </div>
     </div>
   </footer>
 
   <script>
+    // --- LANGUAGE SWITCHER ---
+    let currentLang = 'pl';
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+
+      // Update page title
+      document.title = lang === 'pl' 
+        ? 'RL-Data — Automatyzacja z AI dla Twojej Firmy' 
+        : 'RL-Data — AI Automation for Your Business';
+
+      // Update all elements with data-pl / data-en
+      document.querySelectorAll('[data-pl][data-en]').forEach(el => {
+        const text = el.getAttribute(`data-${lang}`);
+        if (el.hasAttribute('data-html') || text.includes('<')) {
+          el.innerHTML = text;
+        } else {
+          el.textContent = text;
+        }
+      });
+
+      // Update active state on desktop switcher
+      document.querySelectorAll('.lang-switch-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+
+      // Update active state on mobile switcher
+      document.querySelectorAll('.mobile-lang-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+      });
+    }
+
+    // --- HAMBURGER ---
     const hamburger = document.getElementById('hamburger');
     const mobileMenu = document.getElementById('mobileMenu');
 
@@ -1478,12 +1563,20 @@
       mobileMenu.classList.remove('open');
     }
 
-    // Close menu on outside click
     document.addEventListener('click', (e) => {
       if (!hamburger.contains(e.target) && !mobileMenu.contains(e.target)) {
         mobileMenu.classList.remove('open');
       }
     });
+
+    // --- AUTO-DETECT LANGUAGE from browser ---
+    (function() {
+      const browserLang = navigator.language || navigator.userLanguage || '';
+      if (!browserLang.startsWith('pl')) {
+        setLang('en');
+      }
+    })();
   </script>
 </body>
 </html>
+
